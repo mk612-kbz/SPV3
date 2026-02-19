@@ -1,0 +1,14 @@
+{
+  "name": "spv3",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local JSON storage for client creation",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

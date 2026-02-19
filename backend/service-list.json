@@ -1,0 +1,34 @@
+[
+  {
+    "serviceCode": "SC01",
+    "serviceName": "Smart Pay",
+    "intermediateAccount": "242588789",
+    "productCode": "PRLS",
+    "requiresAdditionalRegistration": false,
+    "merchantCode": "MRC-SC01"
+  },
+  {
+    "serviceCode": "SC02",
+    "serviceName": "H2H_Payroll",
+    "intermediateAccount": "441152852",
+    "productCode": "PH2H",
+    "requiresAdditionalRegistration": false,
+    "merchantCode": null
+  },
+  {
+    "serviceCode": "SC03",
+    "serviceName": "H2H_Supplier",
+    "intermediateAccount": "441589789",
+    "productCode": "SLPM",
+    "requiresAdditionalRegistration": false,
+    "merchantCode": null
+  },
+  {
+    "serviceCode": "SC04",
+    "serviceName": "Pay Advance",
+    "intermediateAccount": "789852546",
+    "productCode": "PAWL",
+    "requiresAdditionalRegistration": true,
+    "merchantCode": "MRC-SC04"
+  }
+]

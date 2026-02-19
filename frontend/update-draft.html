@@ -1,0 +1,1954 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Update Draft</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f8fb;
+        --card: #ffffff;
+        --text: #1b1f23;
+        --muted: #6b7280;
+        --accent: #2563eb;
+        --border: #e5e7eb;
+        --danger: #dc2626;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      header {
+        background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+        color: #fff;
+        padding: 16px;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+      }
+
+      header p {
+        margin: 4px 0 0 0;
+        opacity: 0.85;
+      }
+
+      .header-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 24px 16px 40px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: var(--shadow);
+      }
+
+      .card h2 {
+        margin: 0 0 12px 0;
+        font-size: 18px;
+        color: var(--accent);
+      }
+
+      .card h3 {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        color: var(--accent);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .grid-2-address {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      @media (max-width: 900px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+
+        .header-bar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      .required {
+        color: var(--danger);
+        font-weight: 700;
+        margin-left: 4px;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        font-size: 14px;
+        background: #fff;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #c7d2fe;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        outline: none;
+      }
+
+      input[readonly] {
+        background: #f8fafc;
+        border-color: #e5e7eb;
+        color: var(--text);
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .muted {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+
+      .checkbox-row input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--accent);
+      }
+
+      .section-note {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: -6px;
+        margin-bottom: 8px;
+      }
+
+      .wizard-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 10px;
+        align-items: center;
+      }
+
+      .wizard-connector {
+        flex: 1;
+        height: 3px;
+        background: #dbe7ff;
+        border-radius: 999px;
+        min-width: 28px;
+        position: relative;
+        top: 0;
+      }
+
+      .wizard-connector.active {
+        background: var(--accent);
+      }
+
+      .wizard-step-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: transparent;
+        color: #1e3a8a;
+        font-size: 12px;
+        font-weight: 600;
+        border: 1px solid #c7d2fe;
+      }
+
+      .wizard-step-pill.active {
+        background: transparent;
+        border-color: var(--accent);
+        color: var(--accent);
+        box-shadow: 0 6px 14px rgba(37, 99, 235, 0.2);
+        transform: translateY(-1px);
+      }
+
+      .wizard-step-pill.active .step-index {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .wizard-step-pill .step-index {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #e0e7ff;
+        color: inherit;
+        font-size: 11px;
+      }
+
+      .wizard-step {
+        display: none;
+      }
+
+      .wizard-step.active {
+        display: block;
+      }
+
+      .wizard-step.card.active {
+        border-left-color: var(--accent);
+        box-shadow: 0 12px 28px rgba(37, 99, 235, 0.12);
+      }
+
+      .wizard-step.card {
+        border-left: 4px solid #dbeafe;
+      }
+
+      .wizard-shell {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .action-card {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin-top: 12px;
+      }
+
+      .wizard-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .wizard-actions .right {
+        display: flex;
+        gap: 12px;
+      }
+
+      .secondary-address-panel {
+        background: #f8fafc;
+        border: 1px dashed #cbd5f5;
+        border-radius: 12px;
+        padding: 12px;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 10px;
+        padding: 10px 16px;
+        min-height: 40px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        appearance: none;
+        transition:
+          transform 0.08s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 12px rgba(37, 99, 235, 0.18);
+      }
+
+      .btn:disabled,
+      .btn[disabled] {
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .btn-outline {
+        background: #fff;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+      }
+
+      .btn-outline:hover {
+        background: #eef2ff;
+        box-shadow: 0 6px 12px rgba(37, 99, 235, 0.12);
+      }
+
+      .btn-secondary {
+        background: #e5e7eb;
+        color: #111827;
+      }
+
+      .btn-secondary:hover {
+        background: #d9e0e8;
+        box-shadow: 0 6px 12px rgba(148, 163, 184, 0.35);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      .bank-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      .bank-table th,
+      .bank-table td {
+        text-align: left;
+        padding: 10px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .bank-table th {
+        color: var(--muted);
+        font-weight: 600;
+        background: #f8fafc;
+      }
+
+      .service-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+      }
+
+      .service-item {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        display: grid;
+        gap: 8px;
+        background: #fff;
+        transition:
+          box-shadow 0.2s ease,
+          transform 0.08s ease;
+      }
+
+      .service-item:hover {
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        transform: translateY(-1px);
+      }
+
+      .service-item.selected {
+        border-color: #93c5fd;
+        background: #f8fbff;
+      }
+
+      .service-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .service-title {
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .service-code {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #1e3a8a;
+        font-size: 12px;
+      }
+
+      .service-meta {
+        display: grid;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .service-meta strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .service-select-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .service-item.selected .service-select-pill {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .service-selection {
+        display: grid;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .service-accordion {
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .service-accordion-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        cursor: pointer;
+        background: #fff;
+      }
+
+      .service-accordion-header h3 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .service-accordion-toggle {
+        border: none;
+        background: #eef2ff;
+        color: var(--accent);
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .service-accordion-body {
+        padding: 0 16px 16px 16px;
+        border-top: 1px solid var(--border);
+        display: none;
+      }
+
+      .service-accordion.open .service-accordion-body {
+        display: block;
+      }
+
+      .service-extra {
+        margin-top: 16px;
+        border: 1px dashed var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        background: #f8fafc;
+      }
+
+      .service-extra-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--accent-strong);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin-bottom: 10px;
+      }
+
+      .contact-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .contact-card {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px;
+        background: #fff;
+      }
+
+      .contact-card .contact-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .contact-card .contact-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      .document-list {
+        margin-top: 8px;
+      }
+
+      .doc-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .doc-item {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        background: #fff;
+        display: grid;
+        gap: 10px;
+      }
+
+      .doc-item-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .doc-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #eef2ff;
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .doc-fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .readonly-field {
+        padding: 10px 12px;
+        border: 1px solid #eef2f7;
+        border-radius: 10px;
+        background: #f8fafc;
+        font-size: 14px;
+        color: var(--text);
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      @media (max-width: 900px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+
+        .header-bar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-bar">
+        <div>
+          <h1>Update Draft</h1>
+          <p id="headerSub">Loading...</p>
+        </div>
+        <div class="row" style="gap: 4px">
+          <button class="btn btn-secondary" type="button" id="backToListBtn">
+            Back to List
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <form id="updateForm">
+        <section class="card wizard-shell">
+          <div class="wizard-steps" id="wizardSteps">
+            <span class="wizard-step-pill" data-step-pill="0">
+              <span class="step-index">1</span> Client
+            </span>
+            <span class="wizard-connector" data-step-connector="0"></span>
+            <span class="wizard-step-pill" data-step-pill="1">
+              <span class="step-index">2</span> Owner
+            </span>
+            <span class="wizard-connector" data-step-connector="1"></span>
+            <span class="wizard-step-pill" data-step-pill="2">
+              <span class="step-index">3</span> Bank Accounts
+            </span>
+            <span class="wizard-connector" data-step-connector="2"></span>
+            <span class="wizard-step-pill" data-step-pill="3">
+              <span class="step-index">4</span> Service
+            </span>
+          </div>
+        </section>
+
+        <section class="card wizard-step" data-step="0">
+          <div>
+            <h2>Client Information</h2>
+            <div class="grid-2">
+              <div>
+                <label for="cif">CIF<span class="required">*</span></label>
+                <input id="cif" name="cif" readonly />
+              </div>
+              <div>
+                <label for="clientName"
+                  >Name<span class="required">*</span></label
+                >
+                <input id="clientName" name="clientName" />
+              </div>
+              <div>
+                <label for="regNo"
+                  >Company Registration No<span class="required">*</span></label
+                >
+                <input id="regNo" name="regNo" readonly />
+              </div>
+              <div>
+                <label for="orgSector"
+                  >Organization Sector<span class="required">*</span></label
+                >
+                <select id="orgSector" name="orgSector">
+                  <option value="">Select organization sector</option>
+                  <option>Private</option>
+                  <option>Public</option>
+                  <option>Government</option>
+                  <option>Non-Profit</option>
+                </select>
+              </div>
+              <div>
+                <label for="businessIndustry"
+                  >Business Industry<span class="required">*</span></label
+                >
+                <select id="businessIndustry" name="businessIndustry">
+                  <option value="">Select industry</option>
+                  <option>Manufacturing</option>
+                  <option>Retail</option>
+                  <option>Services</option>
+                  <option>Technology</option>
+                  <option>Finance</option>
+                  <option>Healthcare</option>
+                  <option>Education</option>
+                  <option>Agriculture</option>
+                  <option>Construction</option>
+                  <option>Hospitality</option>
+                  <option>Logistics</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label for="businessSector"
+                  >Business Sector<span class="required">*</span></label
+                >
+                <select id="businessSector" name="businessSector">
+                  <option value="">Select sector</option>
+                  <option>Agriculture & Forestry</option>
+                  <option>Mining & Quarrying</option>
+                  <option>Manufacturing</option>
+                  <option>Electricity, Gas & Utilities</option>
+                  <option>Construction</option>
+                  <option>Wholesale & Retail Trade</option>
+                  <option>Transportation & Storage</option>
+                  <option>Accommodation & Food Services</option>
+                  <option>Information & Communication</option>
+                  <option>Financial & Insurance Activities</option>
+                  <option>Real Estate</option>
+                  <option>Professional, Scientific & Technical</option>
+                  <option>Administrative & Support Services</option>
+                  <option>Public Administration & Defense</option>
+                  <option>Education</option>
+                  <option>Human Health & Social Work</option>
+                  <option>Arts, Entertainment & Recreation</option>
+                  <option>Other Services</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 18px">
+            <h3>Contact</h3>
+            <div class="grid-2">
+              <div>
+                <label for="companyPhone"
+                  >Phone<span class="required">*</span></label
+                >
+                <input id="companyPhone" name="companyPhone" />
+              </div>
+              <div>
+                <label for="companyEmail"
+                  >Email<span class="required">*</span></label
+                >
+                <input id="companyEmail" name="companyEmail" type="email" />
+              </div>
+              <div>
+                <label for="companyWebsite"
+                  >Website<span class="required">*</span></label
+                >
+                <input id="companyWebsite" name="companyWebsite" />
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 18px">
+            <h3>Company Address</h3>
+            <div class="grid-2">
+              <div>
+                <label for="companyHouse">House/Building Number</label>
+                <input id="companyHouse" name="companyHouse" />
+              </div>
+              <div>
+                <label for="companyStreet">Street</label>
+                <input id="companyStreet" name="companyStreet" />
+              </div>
+              <div>
+                <label for="companyTownship">Township</label>
+                <input id="companyTownship" name="companyTownship" />
+              </div>
+              <div>
+                <label for="companyState">State</label>
+                <input id="companyState" name="companyState" />
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 18px">
+            <h2>Bank Customer Information</h2>
+            <div class="grid-2">
+              <div>
+                <label for="bankCustomerName"
+                  >Name<span class="required">*</span></label
+                >
+                <input id="bankCustomerName" name="bankCustomerName" readonly />
+              </div>
+              <div>
+                <label for="bankCustomerDob"
+                  >Date of Birth<span class="required">*</span></label
+                >
+                <input
+                  id="bankCustomerDob"
+                  name="bankCustomerDob"
+                  type="date"
+                  readonly
+                />
+              </div>
+              <div>
+                <label for="bankCustomerPhone"
+                  >Phone<span class="required">*</span></label
+                >
+                <input
+                  id="bankCustomerPhone"
+                  name="bankCustomerPhone"
+                  readonly
+                />
+              </div>
+              <div>
+                <label for="bankCustomerIdType"
+                  >ID Type<span class="required">*</span></label
+                >
+                <input
+                  id="bankCustomerIdType"
+                  name="bankCustomerIdType"
+                  readonly
+                />
+              </div>
+              <div>
+                <label for="bankCustomerIdValue"
+                  >ID Value<span class="required">*</span></label
+                >
+                <input
+                  id="bankCustomerIdValue"
+                  name="bankCustomerIdValue"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card wizard-step" data-step="1">
+          <h2>Owner Details</h2>
+          <div class="grid-2">
+            <div>
+              <label for="ownerName">Name<span class="required">*</span></label>
+              <input id="ownerName" name="ownerName" />
+            </div>
+            <div>
+              <label for="ownerDob"
+                >Date of Birth<span class="required">*</span></label
+              >
+              <input id="ownerDob" name="ownerDob" type="date" />
+            </div>
+            <div>
+              <label for="ownerPhone"
+                >Phone<span class="required">*</span></label
+              >
+              <input id="ownerPhone" name="ownerPhone" />
+            </div>
+            <div>
+              <label for="ownerIdType"
+                >ID Type<span class="required">*</span></label
+              >
+              <select id="ownerIdType" name="ownerIdType">
+                <option value="">Select ID type</option>
+                <option value="NRC">NRC</option>
+                <option value="Passport">Passport</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="ownerIdValue"
+                >ID Value<span class="required">*</span></label
+              >
+              <input id="ownerIdValue" name="ownerIdValue" />
+            </div>
+          </div>
+          <div style="margin-top: 18px">
+            <h3>Address</h3>
+            <div class="grid-2">
+              <div>
+                <label for="primaryHouse">House/Building Number</label>
+                <input id="primaryHouse" name="primaryHouse" />
+              </div>
+              <div>
+                <label for="primaryStreet">Street</label>
+                <input id="primaryStreet" name="primaryStreet" />
+              </div>
+              <div>
+                <label for="primaryTownship">Township</label>
+                <input id="primaryTownship" name="primaryTownship" />
+              </div>
+              <div>
+                <label for="primaryState">State</label>
+                <input id="primaryState" name="primaryState" />
+              </div>
+            </div>
+            <div style="margin-top: 12px">
+              <label class="checkbox-row">
+                <input type="checkbox" id="secondaryAddressToggle" /> Add
+                secondary address
+              </label>
+              <div
+                id="secondaryAddressWrapper"
+                class="secondary-address-panel hidden"
+              >
+                <div class="section-note">Secondary Address</div>
+                <div class="grid-2-address">
+                  <div>
+                    <label for="secondaryHouse">House/Building Number</label>
+                    <input id="secondaryHouse" name="secondaryHouse" />
+                  </div>
+                  <div>
+                    <label for="secondaryStreet">Street</label>
+                    <input id="secondaryStreet" name="secondaryStreet" />
+                  </div>
+                  <div>
+                    <label for="secondaryTownship">Township</label>
+                    <input id="secondaryTownship" name="secondaryTownship" />
+                  </div>
+                  <div>
+                    <label for="secondaryState">State</label>
+                    <input id="secondaryState" name="secondaryState" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card wizard-step" data-step="2">
+          <h2>Bank Accounts</h2>
+          <div class="section-note" id="bankAccountsEmpty">
+            No bank accounts loaded yet.
+          </div>
+          <div class="table-wrap hidden" id="bankAccountsWrap">
+            <table class="bank-table">
+              <thead>
+                <tr>
+                  <th style="width: 45%">Account Number</th>
+                  <th style="width: 20%">Currency</th>
+                  <th style="width: 35%">Priority</th>
+                </tr>
+              </thead>
+              <tbody id="bankAccounts"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card wizard-step" data-step="3">
+          <h2>Service Subscription</h2>
+          <div class="section-note">
+            Subscribe to services and provide details for each selection.
+          </div>
+          <div
+            class="service-list"
+            id="serviceList"
+            style="margin-bottom: 16px"
+          ></div>
+          <div class="service-selection" id="selectedServices"></div>
+        </section>
+
+        <section class="card action-card">
+          <div class="wizard-actions">
+            <div>
+              <button class="btn btn-secondary" type="button" id="prevBtn">
+                Back
+              </button>
+            </div>
+            <div class="right">
+              <button class="btn btn-secondary" type="button" id="cancelBtn">
+                Cancel
+              </button>
+              <button class="btn btn-outline" type="button" id="nextBtn">
+                Next
+              </button>
+              <button class="btn btn-primary" type="submit" id="submitBtn">
+                Save & Activate
+              </button>
+            </div>
+          </div>
+        </section>
+      </form>
+    </main>
+
+    <script>
+      const getById = (id) => document.getElementById(id);
+      const params = new URLSearchParams(window.location.search);
+      const clientId = params.get("id") || "";
+
+      const form = getById("updateForm");
+      const backToListBtn = getById("backToListBtn");
+      const cancelBtn = getById("cancelBtn");
+      const steps = Array.from(document.querySelectorAll(".wizard-step"));
+      const stepPills = Array.from(
+        document.querySelectorAll("[data-step-pill]"),
+      );
+      const stepConnectors = Array.from(
+        document.querySelectorAll("[data-step-connector]"),
+      );
+      const prevBtn = getById("prevBtn");
+      const nextBtn = getById("nextBtn");
+      const submitBtn = getById("submitBtn");
+      const secondaryAddressToggle = getById("secondaryAddressToggle");
+      const secondaryAddressWrapper = getById("secondaryAddressWrapper");
+      const bankAccountsBody = getById("bankAccounts");
+      const bankAccountsWrap = getById("bankAccountsWrap");
+      const bankAccountsEmpty = getById("bankAccountsEmpty");
+      const headerSub = getById("headerSub");
+      const serviceListBody = getById("serviceList");
+      const selectedServicesContainer = getById("selectedServices");
+
+      let currentClient = null;
+      let currentStep = 0;
+      let availableServices = [];
+      let clientLoaded = false;
+      let serviceListLoaded = false;
+      let autoSaveInProgress = false;
+
+      const showStep = (index) => {
+        currentStep = Math.max(0, Math.min(index, steps.length - 1));
+        steps.forEach((step, idx) => {
+          step.classList.toggle("active", idx === currentStep);
+        });
+        stepPills.forEach((pill, idx) => {
+          pill.classList.toggle("active", idx === currentStep);
+        });
+        stepConnectors.forEach((connector, idx) => {
+          connector.classList.toggle("active", idx < currentStep);
+        });
+
+        prevBtn.disabled = currentStep === 0;
+        nextBtn.style.display =
+          currentStep === steps.length - 1 ? "none" : "inline-flex";
+        submitBtn.style.display =
+          currentStep === steps.length - 1 ? "inline-flex" : "none";
+
+        const activeStep = steps[currentStep];
+        if (activeStep) {
+          activeStep.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        if (currentStep === 3) {
+          updatePayAdvanceDetails();
+        }
+      };
+
+      const getValue = (id) => {
+        const el = getById(id);
+        return el ? el.value.trim() : "";
+      };
+
+      const setValue = (id, value) => {
+        const el = getById(id);
+        if (!el) return;
+        el.value = value ?? "";
+      };
+
+      const generateShortCode = (serviceCode, cif) => {
+        const base = (cif || "0000").toString().slice(-4);
+        const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
+        return `${serviceCode || "SRV"}-${base}-${rand}`;
+      };
+
+      const getBankAccountOptions = () => {
+        return Array.from(document.querySelectorAll("[data-bank-account-row]"))
+          .map((row) => ({
+            accountNumber: row.dataset.accountNumber || "",
+            currency: row.dataset.accountCurrency || "",
+            priority: row.querySelector("[data-account-priority]")?.value || "",
+          }))
+          .filter((row) => row.accountNumber || row.currency);
+      };
+
+      const updateDebitAccountOptions = (forceDefault = false) => {
+        const selects = Array.from(
+          document.querySelectorAll("[data-service-debit]"),
+        );
+        if (!selects.length) return;
+
+        const accounts = getBankAccountOptions();
+        const defaultAccount = accounts.find(
+          (account) => account.priority === "primary",
+        );
+
+        selects.forEach((select) => {
+          const current = select.value;
+          const preset = select.dataset.debitValue || "";
+          select.innerHTML = "";
+
+          const placeholder = document.createElement("option");
+          placeholder.value = "";
+          placeholder.textContent = accounts.length
+            ? "Select debit account"
+            : "No accounts available";
+          select.appendChild(placeholder);
+
+          accounts.forEach((account) => {
+            const option = document.createElement("option");
+            option.value = account.accountNumber;
+            option.textContent = `${account.accountNumber} - ${
+              account.currency || "-"
+            }`;
+            select.appendChild(option);
+          });
+
+          if (!forceDefault && current) {
+            select.value = current;
+          } else if (!forceDefault && preset) {
+            select.value = preset;
+          } else if (defaultAccount?.accountNumber) {
+            select.value = defaultAccount.accountNumber;
+          } else if (accounts.length) {
+            select.value = accounts[0].accountNumber;
+          }
+        });
+      };
+
+      const setServiceCardOpen = (card, isOpen) => {
+        card.classList.toggle("open", isOpen);
+        const toggleBtn = card.querySelector(".service-accordion-toggle");
+        if (toggleBtn) {
+          toggleBtn.textContent = isOpen ? "Collapse" : "Expand";
+        }
+      };
+
+      const createSelectedServiceCard = (service, existingService = {}) => {
+        if (!selectedServicesContainer) return null;
+        const card = document.createElement("div");
+        const isPayAdvance = Boolean(service.requiresAdditionalRegistration);
+        const payAdvanceShortCode =
+          existingService?.payAdvanceRegistration?.shortCode ||
+          generateShortCode(service.serviceCode, currentClient?.cif);
+        card.className = "card service-accordion";
+        card.setAttribute("data-selected-service", "");
+        card.dataset.serviceCode = service.serviceCode || "";
+        card.dataset.serviceName = service.serviceName || "";
+        card.dataset.serviceIntermediate = service.intermediateAccount || "";
+        card.dataset.payAdvanceShortCode = payAdvanceShortCode;
+        card.innerHTML = `
+          <div class="service-accordion-header" data-accordion-toggle>
+            <h3>${service.serviceName || "Service"} (${service.serviceCode || ""})</h3>
+            <button class="service-accordion-toggle" type="button">
+              Expand
+            </button>
+          </div>
+          <div class="service-accordion-body">
+          <div class="grid-2">
+            <div>
+              <label>Service Code</label>
+              <div class="readonly-field">${service.serviceCode || "-"}</div>
+            </div>
+            <div>
+              <label>Service Name</label>
+              <div class="readonly-field">${service.serviceName || "-"}</div>
+            </div>
+            <div>
+              <label>Intermediate Account</label>
+              <div class="readonly-field" data-service-intermediate-text>
+                ${service.intermediateAccount || "-"}
+              </div>
+            </div>
+            <div>
+              <label>Product Code</label>
+              <input data-service-product value="${
+                existingService.productCode || service.productCode || ""
+              }" />
+            </div>
+            <div>
+              <label>Debit Account<span class="required">*</span></label>
+              <select data-service-debit></select>
+            </div>
+          </div>
+          ${
+            isPayAdvance
+              ? `
+          <div class="service-extra" data-pay-advance-registration>
+            <div class="service-extra-title">Additional Registration</div>
+            <label>Pay Advance Registration</label>
+            <div style="margin-top: 8px">
+              <div class="section-note">Editable</div>
+              <div class="grid-2">
+                <div>
+                  <label>Organization Name</label>
+                  <input data-pay-advance-client-name />
+                </div>
+                <div>
+                  <label>Owner Phone</label>
+                  <input data-pay-advance-owner-phone />
+                </div>
+                <div>
+                  <label>KBZ Pay Merchant Code</label>
+                  <input data-pay-advance-merchant-code />
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 8px">
+              <div class="section-note">Read-only</div>
+              <div class="grid-2">
+                <div>
+                  <label>Owner Name</label>
+                  <div class="readonly-field" data-pay-advance-owner-name>-</div>
+                </div>
+                <div>
+                  <label>Owner Id</label>
+                  <div class="readonly-field" data-pay-advance-owner-id>-</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 12px" data-documents-section>
+              <label>Documents (Required)</label>
+              <div class="document-list hidden" data-documents-wrap>
+                <div class="doc-list" data-service-documents></div>
+              </div>
+              <div style="margin-top: 8px">
+                <button class="btn btn-outline" type="button" data-add-document>
+                  Add Document
+                </button>
+              </div>
+            </div>
+          </div>
+          `
+              : ""
+          }
+          <div style="margin-top: 14px">
+            <label>Contact Persons</label>
+            <div class="contact-list" data-service-contacts></div>
+            <div style="margin-top: 8px">
+              <button class="btn btn-outline" type="button" data-add-contact>
+                Add Contact Person
+              </button>
+            </div>
+          </div>
+          </div>
+        `;
+
+        const toggle = card.querySelector("[data-accordion-toggle]");
+        const toggleBtn = card.querySelector(".service-accordion-toggle");
+        if (toggle && toggleBtn) {
+          toggle.addEventListener("click", () => {
+            const isOpen = card.classList.toggle("open");
+            toggleBtn.textContent = isOpen ? "Collapse" : "Expand";
+          });
+        }
+
+        const debitSelect = card.querySelector("[data-service-debit]");
+        if (debitSelect) {
+          debitSelect.dataset.debitValue = existingService.debitAccount || "";
+        }
+
+        const documentsWrap = card.querySelector("[data-documents-wrap]");
+        const documentsContainer = card.querySelector(
+          "[data-service-documents]",
+        );
+        const addDocumentBtn = card.querySelector("[data-add-document]");
+        const documentTypes = [
+          "Business Registration",
+          "Board Resolution",
+          "ID Card",
+          "Power of Attorney",
+          "Company Profile",
+          "Service Agreement",
+          "Other",
+        ];
+
+        const addDocumentRow = (doc = {}) => {
+          if (!documentsContainer) return;
+          const row = document.createElement("div");
+          row.className = "document-row";
+          if (doc.fileName) {
+            row.dataset.existingFileName = doc.fileName;
+          }
+          const options = documentTypes
+            .map((type) => `<option value="${type}">${type}</option>`)
+            .join("");
+          row.innerHTML = `
+            <div class="doc-item">
+              <div class="doc-item-header">
+                <span class="doc-icon">PDF</span>
+                <button class="btn btn-secondary" type="button" data-remove-document>
+                  Remove
+                </button>
+              </div>
+              <div class="doc-fields">
+                <div>
+                  <label>Document Type</label>
+                  <select data-document-type>
+                    <option value="">Select type</option>
+                    ${options}
+                  </select>
+                </div>
+                <div>
+                  <label>Upload File</label>
+                  <input type="file" data-document-file />
+                </div>
+              </div>
+              ${
+                doc.fileName
+                  ? `<div class="muted">Existing: ${doc.fileName}</div>`
+                  : ""
+              }
+            </div>
+          `;
+          const typeSelect = row.querySelector("[data-document-type]");
+          if (typeSelect) {
+            typeSelect.value = doc.type || "";
+          }
+          row
+            .querySelector("[data-remove-document]")
+            .addEventListener("click", () => {
+              row.remove();
+              if (documentsWrap) {
+                documentsWrap.classList.toggle(
+                  "hidden",
+                  !documentsContainer.children.length,
+                );
+              }
+            });
+          documentsContainer.appendChild(row);
+          if (documentsWrap) {
+            documentsWrap.classList.remove("hidden");
+          }
+        };
+
+        if (addDocumentBtn) {
+          addDocumentBtn.addEventListener("click", () => addDocumentRow());
+        }
+
+        const contactsContainer = card.querySelector("[data-service-contacts]");
+        const addContactBtn = card.querySelector("[data-add-contact]");
+        const addContactRow = (contact = {}) => {
+          if (!contactsContainer) return;
+          const row = document.createElement("div");
+          row.className = "contact-card";
+          row.innerHTML = `
+            <div class="contact-header">
+              <span class="contact-title">Contact Person</span>
+              <button class="btn btn-secondary" type="button" data-remove-contact>
+                Remove
+              </button>
+            </div>
+            <div class="row">
+              <div>
+                <label>Name</label>
+                <input data-contact-name />
+              </div>
+              <div>
+                <label>Email</label>
+                <input data-contact-email />
+              </div>
+            </div>
+            <div class="row" style="margin-top: 10px">
+              <div>
+                <label>Phone</label>
+                <input data-contact-phone />
+              </div>
+              <div>
+                <label>Remark</label>
+                <input data-contact-remark />
+              </div>
+            </div>
+          `;
+          row
+            .querySelector("[data-remove-contact]")
+            .addEventListener("click", () => {
+              row.remove();
+            });
+          row.querySelector("[data-contact-name]").value = contact.name || "";
+          row.querySelector("[data-contact-email]").value = contact.email || "";
+          row.querySelector("[data-contact-phone]").value = contact.phone || "";
+          row.querySelector("[data-contact-remark]").value =
+            contact.remark || "";
+          contactsContainer.appendChild(row);
+        };
+
+        if (addContactBtn) {
+          addContactBtn.addEventListener("click", () => addContactRow());
+        }
+
+        if (Array.isArray(existingService.documents)) {
+          existingService.documents.forEach((doc) => addDocumentRow(doc));
+        }
+        if (Array.isArray(existingService.contactPersons)) {
+          existingService.contactPersons.forEach((contact) =>
+            addContactRow(contact),
+          );
+        }
+
+        const payAdvanceClientNameInput = card.querySelector(
+          "[data-pay-advance-client-name]",
+        );
+        if (payAdvanceClientNameInput) {
+          payAdvanceClientNameInput.value = getValue("clientName");
+          payAdvanceClientNameInput.addEventListener("input", () => {
+            payAdvanceClientNameInput.dataset.manual = "true";
+          });
+        }
+        const payAdvanceMerchantCodeInput = card.querySelector(
+          "[data-pay-advance-merchant-code]",
+        );
+        if (payAdvanceMerchantCodeInput) {
+          payAdvanceMerchantCodeInput.value =
+            existingService?.payAdvanceRegistration?.merchantCode ||
+            service.merchantCode ||
+            "";
+          payAdvanceMerchantCodeInput.addEventListener("input", () => {
+            payAdvanceMerchantCodeInput.dataset.manual = "true";
+          });
+        }
+        const payAdvanceOwnerPhoneInput = card.querySelector(
+          "[data-pay-advance-owner-phone]",
+        );
+        if (payAdvanceOwnerPhoneInput) {
+          payAdvanceOwnerPhoneInput.value = getValue("ownerPhone");
+          payAdvanceOwnerPhoneInput.addEventListener("input", () => {
+            payAdvanceOwnerPhoneInput.dataset.manual = "true";
+          });
+        }
+
+        selectedServicesContainer.appendChild(card);
+        updateDebitAccountOptions();
+        updatePayAdvanceDetails();
+        return card;
+      };
+
+      const renderSelectedServices = (services = []) => {
+        if (!selectedServicesContainer) return;
+        selectedServicesContainer.innerHTML = "";
+
+        const selectedCodes = new Set(
+          services.map((service) => service.serviceCode),
+        );
+
+        services.forEach((service) => {
+          const fromList = availableServices.find(
+            (item) => item.serviceCode === service.serviceCode,
+          );
+          const mergedService = {
+            ...fromList,
+            ...service,
+          };
+          const newCard = createSelectedServiceCard(mergedService, service);
+          if (newCard) {
+            setServiceCardOpen(newCard, false);
+          }
+        });
+
+        if (serviceListBody) {
+          serviceListBody
+            .querySelectorAll("[data-service-item]")
+            .forEach((item) => {
+              item.classList.toggle(
+                "selected",
+                selectedCodes.has(item.dataset.serviceCode),
+              );
+            });
+        }
+      };
+
+      const maybeRenderServices = () => {
+        if (!clientLoaded || !serviceListLoaded) return;
+        renderSelectedServices(currentClient?.services || []);
+      };
+
+      const loadServiceList = () => {
+        if (!serviceListBody) return;
+        fetch("/api/services")
+          .then((res) => res.json())
+          .then((payload) => {
+            if (!payload.ok) {
+              throw new Error(payload.message || "Failed to load services");
+            }
+            availableServices = payload.data || [];
+            const cards = availableServices
+              .map(
+                (service) => `
+                  <div class="service-item" data-service-item data-service-code="${
+                    service.serviceCode || ""
+                  }">
+                    <div class="service-top">
+                      <div>
+                        <div class="service-title">${
+                          service.serviceName || "Service"
+                        }</div>
+                        <span class="service-code">${
+                          service.serviceCode || "-"
+                        }</span>
+                      </div>
+                      <span class="service-select-pill">Subscribe</span>
+                    </div>
+                  </div>
+                `,
+              )
+              .join("");
+            serviceListBody.innerHTML = cards;
+            serviceListLoaded = true;
+            maybeRenderServices();
+          })
+          .catch(() => {
+            serviceListBody.innerHTML = "";
+            serviceListLoaded = true;
+          });
+      };
+
+      const updatePayAdvanceDetails = () => {
+        const clientName = getValue("clientName") || "-";
+        const ownerName = getValue("ownerName") || "-";
+        const ownerPhone = getValue("ownerPhone") || "-";
+        const ownerIdType = getValue("ownerIdType") || "-";
+        const ownerIdValue = getValue("ownerIdValue") || "-";
+
+        document
+          .querySelectorAll("[data-pay-advance-registration]")
+          .forEach((section) => {
+            const clientNameEl = section.querySelector(
+              "[data-pay-advance-client-name]",
+            );
+            const ownerNameEl = section.querySelector(
+              "[data-pay-advance-owner-name]",
+            );
+            const ownerPhoneEl = section.querySelector(
+              "[data-pay-advance-owner-phone]",
+            );
+            const ownerIdEl = section.querySelector(
+              "[data-pay-advance-owner-id]",
+            );
+
+            if (clientNameEl) {
+              const isManual = clientNameEl.dataset.manual === "true";
+              if (!isManual) {
+                clientNameEl.value = clientName;
+              }
+            }
+            if (ownerNameEl) ownerNameEl.textContent = ownerName;
+            if (ownerPhoneEl) {
+              const isManual = ownerPhoneEl.dataset.manual === "true";
+              if (!isManual) {
+                ownerPhoneEl.value = ownerPhone;
+              }
+            }
+            if (ownerIdEl)
+              ownerIdEl.textContent = `${ownerIdType} ${ownerIdValue}`.trim();
+          });
+      };
+
+      const loadClient = async () => {
+        try {
+          const res = await fetch("/api/clients");
+          const data = await res.json();
+          const clients = Array.isArray(data) ? data : [];
+          const entry = clients.find((item) => item?.client?.id === clientId);
+          if (!entry) throw new Error("Client not found");
+
+          currentClient = entry.client || {};
+          if (currentClient.status !== "draft") {
+            window.location.href = `update-client.html?id=${clientId}`;
+            return;
+          }
+          const owner = currentClient.owner || {};
+          const bankCustomer = currentClient.bankCustomer || {};
+          const address = currentClient.addresses || {};
+
+          setValue("cif", currentClient.cif);
+          setValue("clientName", currentClient.clientName);
+          setValue("regNo", currentClient.companyRegistrationNo);
+          setValue("orgSector", currentClient.organizationSector);
+          setValue("businessIndustry", currentClient.businessIndustry);
+          setValue("businessSector", currentClient.businessSector);
+          setValue("companyPhone", currentClient.phone);
+          setValue("companyEmail", currentClient.email);
+          setValue("companyWebsite", currentClient.website);
+          setValue("companyHouse", address.company?.houseBuildingNumber);
+          setValue("companyStreet", address.company?.street);
+          setValue("companyTownship", address.company?.township);
+          setValue("companyState", address.company?.state);
+
+          setValue("ownerName", owner.name);
+          setValue("ownerDob", owner.dateOfBirth);
+          setValue("ownerPhone", owner.phone);
+          setValue("ownerIdType", owner.idType);
+          setValue("ownerIdValue", owner.idValue);
+
+          setValue("bankCustomerName", bankCustomer.name);
+          setValue("bankCustomerDob", bankCustomer.dateOfBirth);
+          setValue("bankCustomerPhone", bankCustomer.phone);
+          setValue("bankCustomerIdType", bankCustomer.idType);
+          setValue("bankCustomerIdValue", bankCustomer.idValue);
+
+          setValue("primaryHouse", address.primary?.houseBuildingNumber);
+          setValue("primaryStreet", address.primary?.street);
+          setValue("primaryTownship", address.primary?.township);
+          setValue("primaryState", address.primary?.state);
+
+          const hasSecondary = Boolean(
+            address.secondary?.houseBuildingNumber ||
+            address.secondary?.street ||
+            address.secondary?.township ||
+            address.secondary?.state,
+          );
+          if (secondaryAddressToggle && secondaryAddressWrapper) {
+            secondaryAddressToggle.checked = hasSecondary;
+            secondaryAddressWrapper.classList.toggle("hidden", !hasSecondary);
+          }
+
+          setValue("secondaryHouse", address.secondary?.houseBuildingNumber);
+          setValue("secondaryStreet", address.secondary?.street);
+          setValue("secondaryTownship", address.secondary?.township);
+          setValue("secondaryState", address.secondary?.state);
+
+          if (bankAccountsBody) {
+            const bankAccounts = Array.isArray(currentClient.bankAccounts)
+              ? currentClient.bankAccounts
+              : [];
+            if (!bankAccounts.length) {
+              bankAccountsBody.innerHTML =
+                '<tr><td colspan="3" class="muted">No bank accounts.</td></tr>';
+              if (bankAccountsWrap) {
+                bankAccountsWrap.classList.add("hidden");
+              }
+              if (bankAccountsEmpty) {
+                bankAccountsEmpty.classList.remove("hidden");
+              }
+            } else {
+              bankAccountsBody.innerHTML = bankAccounts
+                .map(
+                  (account) => `
+                    <tr data-bank-account-row data-account-number="${
+                      account.accountNumber || ""
+                    }" data-account-currency="${account.currency || ""}">
+                      <td>${account.accountNumber || "-"}</td>
+                      <td>${account.currency || "-"}</td>
+                      <td>
+                        <select data-account-priority>
+                          <option value="">Not set</option>
+                          <option value="primary">Default (Primary)</option>
+                        </select>
+                      </td>
+                    </tr>
+                  `,
+                )
+                .join("");
+
+              bankAccountsBody
+                .querySelectorAll("[data-bank-account-row]")
+                .forEach((row, idx) => {
+                  const select = row.querySelector("[data-account-priority]");
+                  if (!select) return;
+                  select.value = bankAccounts[idx]?.priority || "";
+                });
+              if (bankAccountsWrap) {
+                bankAccountsWrap.classList.remove("hidden");
+              }
+              if (bankAccountsEmpty) {
+                bankAccountsEmpty.classList.add("hidden");
+              }
+            }
+          }
+
+          headerSub.textContent = `Draft CIF: ${currentClient.cif || "-"}`;
+          clientLoaded = true;
+          maybeRenderServices();
+        } catch (error) {
+          headerSub.textContent = error.message || "Failed to load client";
+        }
+      };
+
+      const buildPayload = () => {
+        const secondaryAddress = secondaryAddressToggle?.checked
+          ? {
+              houseBuildingNumber: getById("secondaryHouse")?.value?.trim(),
+              street: getById("secondaryStreet")?.value?.trim(),
+              township: getById("secondaryTownship")?.value?.trim(),
+              state: getById("secondaryState")?.value?.trim(),
+            }
+          : null;
+
+        const bankAccounts = Array.from(
+          document.querySelectorAll("[data-bank-account-row]"),
+        )
+          .map((row) => ({
+            accountNumber: row.dataset.accountNumber || "",
+            currency: row.dataset.accountCurrency || "",
+            priority: row
+              .querySelector("[data-account-priority]")
+              ?.value?.trim(),
+          }))
+          .filter((row) => row.accountNumber || row.currency);
+
+        return {
+          client: {
+            ...currentClient,
+            clientName: getById("clientName")?.value?.trim(),
+            organizationSector: getById("orgSector")?.value?.trim(),
+            businessIndustry: getById("businessIndustry")?.value?.trim(),
+            businessSector: getById("businessSector")?.value?.trim(),
+            phone: getById("companyPhone")?.value?.trim(),
+            email: getById("companyEmail")?.value?.trim(),
+            website: getById("companyWebsite")?.value?.trim(),
+            status: "draft",
+            draftUpdatedAt: new Date().toISOString(),
+            bankCustomer: {
+              name: getById("bankCustomerName")?.value?.trim(),
+              dateOfBirth: getById("bankCustomerDob")?.value?.trim(),
+              phone: getById("bankCustomerPhone")?.value?.trim(),
+              idType: getById("bankCustomerIdType")?.value?.trim(),
+              idValue: getById("bankCustomerIdValue")?.value?.trim(),
+            },
+            bankAccounts,
+            services: Array.from(
+              document.querySelectorAll("[data-selected-service]"),
+            ).map((card) => ({
+              serviceCode: card.dataset.serviceCode || "",
+              serviceName: card.dataset.serviceName || "",
+              intermediateAccount: card.dataset.serviceIntermediate || "",
+              productCode: card
+                .querySelector("[data-service-product]")
+                ?.value?.trim(),
+              debitAccount: card
+                .querySelector("[data-service-debit]")
+                ?.value?.trim(),
+              payAdvanceRegistration: card.querySelector(
+                "[data-pay-advance-registration]",
+              )
+                ? {
+                    shortCode:
+                      card.dataset.payAdvanceShortCode ||
+                      generateShortCode(
+                        card.dataset.serviceCode,
+                        getValue("cif"),
+                      ),
+                    merchantCode: card
+                      .querySelector("[data-pay-advance-merchant-code]")
+                      ?.value?.trim(),
+                  }
+                : null,
+              documents: card.querySelector("[data-pay-advance-registration]")
+                ? Array.from(
+                    card.querySelectorAll(
+                      "[data-service-documents] .document-row",
+                    ),
+                  )
+                    .map((row) => {
+                      const fileInput = row.querySelector(
+                        "[data-document-file]",
+                      );
+                      return {
+                        type: row
+                          .querySelector("[data-document-type]")
+                          ?.value?.trim(),
+                        fileName:
+                          fileInput?.files?.[0]?.name ||
+                          row.dataset.existingFileName ||
+                          "",
+                      };
+                    })
+                    .filter((row) => row.type || row.fileName)
+                : [],
+              contactPersons: Array.from(
+                card.querySelectorAll("[data-service-contacts] .contact-card"),
+              )
+                .map((row) => ({
+                  name: row.querySelector("[data-contact-name]")?.value?.trim(),
+                  email: row
+                    .querySelector("[data-contact-email]")
+                    ?.value?.trim(),
+                  phone: row
+                    .querySelector("[data-contact-phone]")
+                    ?.value?.trim(),
+                  remark: row
+                    .querySelector("[data-contact-remark]")
+                    ?.value?.trim(),
+                }))
+                .filter(
+                  (row) => row.name || row.email || row.phone || row.remark,
+                ),
+            })),
+            owner: {
+              ...currentClient.owner,
+              name: getById("ownerName")?.value?.trim(),
+              dateOfBirth: getById("ownerDob")?.value?.trim(),
+              phone: getById("ownerPhone")?.value?.trim(),
+              idType: getById("ownerIdType")?.value?.trim(),
+              idValue: getById("ownerIdValue")?.value?.trim(),
+            },
+            addresses: {
+              primary: {
+                houseBuildingNumber: getById("primaryHouse")?.value?.trim(),
+                street: getById("primaryStreet")?.value?.trim(),
+                township: getById("primaryTownship")?.value?.trim(),
+                state: getById("primaryState")?.value?.trim(),
+              },
+              company: {
+                houseBuildingNumber: getById("companyHouse")?.value?.trim(),
+                street: getById("companyStreet")?.value?.trim(),
+                township: getById("companyTownship")?.value?.trim(),
+                state: getById("companyState")?.value?.trim(),
+              },
+              secondary: secondaryAddress,
+            },
+          },
+        };
+      };
+
+      const saveDraft = async () => {
+        const payload = buildPayload();
+        const res = await fetch("/api/clients/draft", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const result = await res.json();
+        if (!result.ok) {
+          throw new Error(result.message || "Update failed");
+        }
+      };
+
+      const saveActive = async () => {
+        const payload = buildPayload();
+        payload.client.status = "active";
+        payload.client.draftUpdatedAt = null;
+        const res = await fetch("/api/clients", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const result = await res.json();
+        if (!result.ok) {
+          throw new Error(result.message || "Update failed");
+        }
+      };
+
+      const autoSave = async () => {
+        if (autoSaveInProgress) return;
+        autoSaveInProgress = true;
+        try {
+          await saveDraft();
+        } catch (_) {
+          // Keep silent for step navigation auto-save.
+        } finally {
+          autoSaveInProgress = false;
+        }
+      };
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        try {
+          await saveActive();
+          window.location.href = "index.html";
+        } catch (error) {
+          alert(error.message || "Update failed");
+        }
+      });
+
+      cancelBtn.addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+
+      backToListBtn.addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
+
+      if (secondaryAddressToggle && secondaryAddressWrapper) {
+        secondaryAddressToggle.addEventListener("change", () => {
+          secondaryAddressWrapper.classList.toggle(
+            "hidden",
+            !secondaryAddressToggle.checked,
+          );
+        });
+      }
+
+      if (bankAccountsBody) {
+        bankAccountsBody.addEventListener("change", (event) => {
+          const target = event.target;
+          if (!(target instanceof HTMLSelectElement)) return;
+          if (!target.matches("[data-account-priority]")) return;
+          if (!target.value) return;
+
+          const allSelects = Array.from(
+            bankAccountsBody.querySelectorAll("[data-account-priority]"),
+          );
+          allSelects.forEach((select) => {
+            if (select !== target && select.value === target.value) {
+              select.value = "";
+            }
+          });
+          updateDebitAccountOptions(true);
+        });
+      }
+
+      if (serviceListBody) {
+        serviceListBody.addEventListener("click", (event) => {
+          const card = event.target.closest("[data-service-item]");
+          if (!card || !serviceListBody.contains(card)) return;
+
+          const code = card.dataset.serviceCode;
+          if (!code) return;
+
+          const existing = selectedServicesContainer?.querySelector(
+            `[data-selected-service][data-service-code="${code}"]`,
+          );
+
+          if (existing) {
+            existing.remove();
+            card.classList.remove("selected");
+            return;
+          }
+
+          const service = availableServices.find(
+            (item) => item.serviceCode === code,
+          );
+          if (service) {
+            const newCard = createSelectedServiceCard(service);
+            if (newCard && selectedServicesContainer) {
+              selectedServicesContainer
+                .querySelectorAll("[data-selected-service]")
+                .forEach((item) => {
+                  setServiceCardOpen(item, item === newCard);
+                });
+              newCard.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+            card.classList.add("selected");
+          }
+        });
+      }
+
+      ["clientName", "ownerName", "ownerPhone", "ownerIdType", "ownerIdValue"]
+        .map((id) => document.getElementById(id))
+        .filter(Boolean)
+        .forEach((input) => {
+          input.addEventListener("input", updatePayAdvanceDetails);
+          input.addEventListener("change", updatePayAdvanceDetails);
+        });
+
+      if (prevBtn && nextBtn) {
+        prevBtn.addEventListener("click", () => {
+          showStep(currentStep - 1);
+          autoSave();
+        });
+        nextBtn.addEventListener("click", () => {
+          showStep(currentStep + 1);
+          autoSave();
+        });
+      }
+
+      stepPills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          const stepIndex = Number(pill.dataset.stepPill);
+          if (!Number.isNaN(stepIndex)) {
+            showStep(stepIndex);
+            autoSave();
+          }
+        });
+      });
+
+      loadClient();
+      loadServiceList();
+      showStep(0);
+    </script>
+  </body>
+</html>

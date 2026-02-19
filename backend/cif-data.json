@@ -1,0 +1,144 @@
+{
+  "242001260": {
+    "cif": "242001260",
+    "clientName": "Top One Trading Co., Ltd.",
+    "regNo": "119257115",
+    "orgSector": "Private",
+    "businessIndustry": "Retail",
+    "businessSector": "Wholesale & Retail Trade",
+    "companyPhone": "01-391234",
+    "companyEmail": "contact@toponetrading.com",
+    "companyWebsite": "www.toponetrading.com",
+    "bankCustomerName": "U Hla",
+    "bankCustomerDob": "1980-02-09",
+    "bankCustomerPhone": "09-789452541",
+    "bankCustomerIdType": "NRC",
+    "bankCustomerIdValue": "12/AHLANA(N)123456",
+    "companyHouse": "No. 18",
+    "companyStreet": "Bogyoke Aung San Road",
+    "companyTownship": "Bahan",
+    "companyState": "Yangon",
+    "bankAccounts": [
+      {
+        "accountNumber": "06051112401396801",
+        "currency": "MMK"
+      },
+      {
+        "accountNumber": "06051112401396802",
+        "currency": "USD"
+      }
+    ]
+  },
+  "242001487": {
+    "cif": "242001487",
+    "clientName": "Golden Harvest Agro Co., Ltd.",
+    "regNo": "112035789",
+    "orgSector": "Private",
+    "businessIndustry": "Agriculture",
+    "businessSector": "Agriculture & Forestry",
+    "companyPhone": "067-22659",
+    "companyEmail": "info@goldenharvest.com.mm",
+    "companyWebsite": "www.goldenharvest.com.mm",
+    "bankCustomerName": "Daw May Myat",
+    "bankCustomerDob": "1978-11-21",
+    "bankCustomerPhone": "09-771233445",
+    "bankCustomerIdType": "NRC",
+    "bankCustomerIdValue": "9/MaHtaNa(N)219877",
+    "companyHouse": "Plot 8",
+    "companyStreet": "Industrial Zone",
+    "companyTownship": "Myingyan",
+    "companyState": "Mandalay",
+    "bankAccounts": [
+      {
+        "accountNumber": "06051122401394567",
+        "currency": "MMK"
+      }
+    ]
+  },
+  "242001932": {
+    "cif": "242001932",
+    "clientName": "Sunrise Tech Solutions Co., Ltd.",
+    "regNo": "117884332",
+    "orgSector": "Private",
+    "businessIndustry": "Technology",
+    "businessSector": "Information & Communication",
+    "companyPhone": "01-579812",
+    "companyEmail": "hello@sunrisetech.io",
+    "companyWebsite": "www.sunrisetech.io",
+    "bankCustomerName": "U Aung Min",
+    "bankCustomerDob": "1986-05-03",
+    "bankCustomerPhone": "09-767812345",
+    "bankCustomerIdType": "NRC",
+    "bankCustomerIdValue": "12/LaKaNa(N)112233",
+    "companyHouse": "No. 55",
+    "companyStreet": "Kabar Aye Pagoda Road",
+    "companyTownship": "Yankin",
+    "companyState": "Yangon",
+    "bankAccounts": [
+      {
+        "accountNumber": "06051133401390012",
+        "currency": "MMK"
+      },
+      {
+        "accountNumber": "06051133401390013",
+        "currency": "USD"
+      }
+    ]
+  },
+  "242002115": {
+    "cif": "242002115",
+    "clientName": "Emerald Logistics Co., Ltd.",
+    "regNo": "121004578",
+    "orgSector": "Private",
+    "businessIndustry": "Logistics",
+    "businessSector": "Transportation & Storage",
+    "companyPhone": "01-546778",
+    "companyEmail": "ops@emeraldlogistics.com",
+    "companyWebsite": "www.emeraldlogistics.com",
+    "bankCustomerName": "U Kyaw Zaw",
+    "bankCustomerDob": "1982-08-17",
+    "bankCustomerPhone": "09-775566221",
+    "bankCustomerIdType": "NRC",
+    "bankCustomerIdValue": "12/ThaGaKa(N)778899",
+    "companyHouse": "No. 102",
+    "companyStreet": "Pyay Road",
+    "companyTownship": "Hlaing",
+    "companyState": "Yangon",
+    "bankAccounts": [
+      {
+        "accountNumber": "06051155401397721",
+        "currency": "MMK"
+      }
+    ]
+  },
+  "242002308": {
+    "cif": "242002308",
+    "clientName": "Shwe Pyi Thar Manufacturing Co., Ltd.",
+    "regNo": "106440289",
+    "orgSector": "Private",
+    "businessIndustry": "Manufacturing",
+    "businessSector": "Manufacturing",
+    "companyPhone": "01-684412",
+    "companyEmail": "admin@shwepyithar-mfg.com",
+    "companyWebsite": "www.shwepyithar-mfg.com",
+    "bankCustomerName": "Daw Thandar",
+    "bankCustomerDob": "1975-03-12",
+    "bankCustomerPhone": "09-788990012",
+    "bankCustomerIdType": "NRC",
+    "bankCustomerIdValue": "10/KaMaYa(N)554433",
+    "companyHouse": "No. 7",
+    "companyStreet": "Industrial Zone (1)",
+    "companyTownship": "Shwe Pyi Thar",
+    "companyState": "Yangon",
+    "bankAccounts": [
+      {
+        "accountNumber": "06051177401395501",
+        "currency": "MMK"
+      },
+      {
+        "accountNumber": "06051177401395502",
+        "currency": "EUR"
+      }
+    ]
+  }
+}
