@@ -665,6 +665,12 @@
             }
           }
 
+          const formatMethod = (value) => {
+            if (value === "bank") return "Bank Account";
+            if (value === "wallet") return "Wallet Account";
+            return value || "-";
+          };
+
           const servicesList = getById("servicesList");
           if (servicesList) {
             if (!services.length) {
@@ -673,6 +679,8 @@
             } else {
               servicesList.innerHTML = services
                 .map((item) => {
+                  const transferMethod = formatMethod(item.transferMethod);
+                  const receivingMethod = formatMethod(item.receivingMethod);
                   const documents = Array.isArray(item.documents)
                     ? item.documents
                     : [];
@@ -757,8 +765,32 @@
                           <div class="kv-value">${item.productCode || "-"}</div>
                         </div>
                         <div class="kv-row">
+                          <div class="kv-label">Transfer Method</div>
+                          <div class="kv-value">${transferMethod}</div>
+                        </div>
+                        ${
+                          item.transferMethod === "wallet"
+                            ? `
+                        <div class="kv-row">
+                          <div class="kv-label">Wallet Phone</div>
+                          <div class="kv-value">${item.walletPhone || "-"}</div>
+                        </div>
+                        `
+                            : ""
+                        }
+                        ${
+                          item.transferMethod === "wallet"
+                            ? ""
+                            : `
+                        <div class="kv-row">
                           <div class="kv-label">Debit Account</div>
                           <div class="kv-value">${item.debitAccount || "-"}</div>
+                        </div>
+                        `
+                        }
+                        <div class="kv-row">
+                          <div class="kv-label">Receiving Method</div>
+                          <div class="kv-value">${receivingMethod}</div>
                         </div>
                         ${additionalInfo}
                       </div>

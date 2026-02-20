@@ -1175,8 +1175,26 @@
               }" />
             </div>
             <div>
+              <label>Transfer Method<span class="required">*</span></label>
+              <select data-service-transfer>
+                <option value="bank">Bank Account</option>
+                <option value="wallet">Wallet Account</option>
+              </select>
+            </div>
+            <div data-debit-account>
               <label>Debit Account<span class="required">*</span></label>
               <select data-service-debit></select>
+            </div>
+            <div data-wallet-transfer class="hidden">
+              <label>Wallet Phone<span class="required">*</span></label>
+              <input data-service-wallet-phone type="tel" />
+            </div>
+            <div>
+              <label>Receiving Method<span class="required">*</span></label>
+              <select data-service-receiving>
+                <option value="bank">Bank Account</option>
+                <option value="wallet">Wallet Account</option>
+              </select>
             </div>
           </div>
           ${
@@ -1289,6 +1307,51 @@
         const debitSelect = card.querySelector("[data-service-debit]");
         if (debitSelect) {
           debitSelect.dataset.debitValue = existingService.debitAccount || "";
+        }
+
+        const transferSelect = card.querySelector("[data-service-transfer]");
+        const walletWrapper = card.querySelector("[data-wallet-transfer]");
+        const walletPhoneInput = card.querySelector(
+          "[data-service-wallet-phone]",
+        );
+        const debitWrapper = card.querySelector("[data-debit-account]");
+        const receivingSelect = card.querySelector(
+          "[data-service-receiving]",
+        );
+
+        const applyTransferMode = () => {
+          const mode = transferSelect?.value || "bank";
+          const isWallet = mode === "wallet";
+          if (walletWrapper) {
+            walletWrapper.classList.toggle("hidden", !isWallet);
+          }
+          if (walletPhoneInput) {
+            walletPhoneInput.required = isWallet;
+          }
+          if (debitSelect) {
+            debitSelect.required = !isWallet;
+            debitSelect.disabled = isWallet;
+            if (isWallet) {
+              debitSelect.value = "";
+            }
+          }
+          if (debitWrapper) {
+            debitWrapper.classList.toggle("hidden", isWallet);
+          }
+        };
+
+        if (transferSelect) {
+          transferSelect.value = existingService.transferMethod || "bank";
+          transferSelect.addEventListener("change", applyTransferMode);
+        }
+        if (walletPhoneInput) {
+          walletPhoneInput.value = existingService.walletPhone || "";
+        }
+        applyTransferMode();
+
+        if (receivingSelect) {
+          receivingSelect.value = existingService.receivingMethod || "bank";
+          receivingSelect.addEventListener("change", () => {});
         }
 
         const documentsWrap = card.querySelector("[data-documents-wrap]");
@@ -1832,6 +1895,15 @@
               debitAccount: card
                 .querySelector("[data-service-debit]")
                 ?.value?.trim(),
+              transferMethod:
+                card.querySelector("[data-service-transfer]")?.value?.trim() ||
+                "bank",
+              walletPhone: card
+                .querySelector("[data-service-wallet-phone]")
+                ?.value?.trim(),
+              receivingMethod:
+                card.querySelector("[data-service-receiving]")?.value?.trim() ||
+                "bank",
               payAdvanceRegistration: card.querySelector(
                 "[data-pay-advance-registration]",
               )

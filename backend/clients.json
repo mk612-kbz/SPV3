@@ -4,9 +4,9 @@
       "cif": "242001260",
       "clientName": "Top One Trading Co., Ltd.",
       "companyRegistrationNo": "119257115",
-      "organizationSector": "Public",
-      "businessIndustry": "Retail",
-      "businessSector": "Electricity, Gas & Utilities",
+      "organizationSector": "Private",
+      "businessIndustry": "Healthcare",
+      "businessSector": "Transportation & Storage",
       "phone": "01-391234",
       "email": "contact@toponetrading.com",
       "website": "www.toponetrading.com",
@@ -19,8 +19,8 @@
       },
       "owner": {
         "name": "Min Khant",
-        "dateOfBirth": "2026-02-11",
-        "phone": "09789456123",
+        "dateOfBirth": "2026-02-12",
+        "phone": "09123456789",
         "idType": "NRC",
         "idValue": "12/4547444"
       },
@@ -53,29 +53,52 @@
       ],
       "services": [
         {
+          "serviceCode": "SC01",
+          "serviceName": "Smart Pay",
+          "intermediateAccount": "242588789",
+          "productCode": "PRLS",
+          "debitAccount": "06051112401396801",
+          "transferMethod": "bank",
+          "walletPhone": "",
+          "receivingMethod": "bank",
+          "payAdvanceRegistration": null,
+          "documents": [],
+          "contactPersons": [
+            {
+              "name": "Contact Person 1",
+              "email": "cp@gmail.com",
+              "phone": "09123456789",
+              "remark": "test remark"
+            }
+          ]
+        },
+        {
           "serviceCode": "SC04",
           "serviceName": "Pay Advance",
           "intermediateAccount": "789852546",
           "productCode": "PAWL",
-          "debitAccount": "06051112401396801",
+          "debitAccount": "",
+          "transferMethod": "wallet",
+          "walletPhone": "123456",
+          "receivingMethod": "bank",
           "payAdvanceRegistration": {
-            "shortCode": "SC04-1260-I49P"
+            "shortCode": "SC04-1260-0ZK0"
           },
           "documents": [],
           "contactPersons": [
             {
-              "name": "Min Khant",
-              "email": "min.khant-1@kbzbank.com",
-              "phone": "09788990012",
-              "remark": "test"
+              "name": "Contact Person 2",
+              "email": "cp2@gmail.com",
+              "phone": "091236554",
+              "remark": "test remark"
             }
           ]
         }
       ],
-      "createdAt": "2026-02-20T07:31:39.445Z",
+      "createdAt": "2026-02-20T10:03:06.955Z",
       "status": "active",
       "draftUpdatedAt": null,
-      "id": "9372e71e-c19f-4ec5-a82d-1a00be061dfc"
+      "id": "c06125a3-349c-43d7-828b-4383cde1e171"
     }
   }
 ]
