@@ -4,9 +4,9 @@
       "cif": "242001260",
       "clientName": "Top One Trading Co., Ltd.",
       "companyRegistrationNo": "119257115",
-      "organizationSector": "",
-      "businessIndustry": "",
-      "businessSector": "",
+      "organizationSector": "Public",
+      "businessIndustry": "Retail",
+      "businessSector": "Electricity, Gas & Utilities",
       "phone": "01-391234",
       "email": "contact@toponetrading.com",
       "website": "www.toponetrading.com",
@@ -18,18 +18,18 @@
         "idValue": "12/AHLANA(N)123456"
       },
       "owner": {
-        "name": "test",
-        "dateOfBirth": "",
-        "phone": "09789784547",
-        "idType": "",
-        "idValue": ""
+        "name": "Min Khant",
+        "dateOfBirth": "2026-02-11",
+        "phone": "09789456123",
+        "idType": "NRC",
+        "idValue": "12/4547444"
       },
       "addresses": {
         "primary": {
-          "houseBuildingNumber": "",
-          "street": "",
-          "township": "",
-          "state": ""
+          "houseBuildingNumber": "1",
+          "street": "2",
+          "township": "3",
+          "state": "4"
         },
         "company": {
           "houseBuildingNumber": "No. 18",
@@ -43,7 +43,7 @@
         {
           "accountNumber": "06051112401396801",
           "currency": "MMK",
-          "priority": ""
+          "priority": "primary"
         },
         {
           "accountNumber": "06051112401396802",
@@ -59,88 +59,23 @@
           "productCode": "PAWL",
           "debitAccount": "06051112401396801",
           "payAdvanceRegistration": {
-            "shortCode": "SC04-1260-72UV"
+            "shortCode": "SC04-1260-I49P"
           },
           "documents": [],
-          "contactPersons": []
+          "contactPersons": [
+            {
+              "name": "Min Khant",
+              "email": "min.khant-1@kbzbank.com",
+              "phone": "09788990012",
+              "remark": "test"
+            }
+          ]
         }
       ],
-      "createdAt": "2026-02-20T06:42:52.363Z",
-      "status": "draft",
-      "draftUpdatedAt": "2026-02-20T06:42:52.373Z",
-      "id": "65ec4cdc-af92-42fa-bc41-0932d9f87a9b"
-    }
-  },
-  {
-    "client": {
-      "cif": "242001932",
-      "clientName": "Sunrise Tech Solutions Co., Ltd.",
-      "companyRegistrationNo": "117884332",
-      "organizationSector": "",
-      "businessIndustry": "",
-      "businessSector": "",
-      "phone": "01-579812",
-      "email": "hello@sunrisetech.io",
-      "website": "www.sunrisetech.io",
-      "bankCustomer": {
-        "name": "U Aung Min",
-        "dateOfBirth": "1986-05-03",
-        "phone": "09-767812345",
-        "idType": "NRC",
-        "idValue": "12/LaKaNa(N)112233"
-      },
-      "owner": {
-        "name": "",
-        "dateOfBirth": "",
-        "phone": "",
-        "idType": "NRC",
-        "idValue": "test"
-      },
-      "addresses": {
-        "primary": {
-          "houseBuildingNumber": "",
-          "street": "",
-          "township": "",
-          "state": ""
-        },
-        "company": {
-          "houseBuildingNumber": "No. 55",
-          "street": "Kabar Aye Pagoda Road",
-          "township": "Yankin",
-          "state": "Yangon"
-        },
-        "secondary": null
-      },
-      "bankAccounts": [
-        {
-          "accountNumber": "06051133401390012",
-          "currency": "MMK",
-          "priority": ""
-        },
-        {
-          "accountNumber": "06051133401390013",
-          "currency": "USD",
-          "priority": ""
-        }
-      ],
-      "services": [
-        {
-          "serviceCode": "SC04",
-          "serviceName": "Pay Advance",
-          "intermediateAccount": "789852546",
-          "productCode": "PAWL",
-          "debitAccount": "06051133401390012",
-          "payAdvanceRegistration": {
-            "shortCode": "SC04-1932-Q6I6"
-          },
-          "documents": [],
-          "contactPersons": []
-        }
-      ],
-      "createdAt": "2026-02-20T06:50:44.073Z",
-      "status": "draft",
-      "draftUpdatedAt": "2026-02-20T06:50:44.084Z",
-      "id": "d6b13a25-4a62-4fa5-a77c-466d86954d39"
+      "createdAt": "2026-02-20T07:31:39.445Z",
+      "status": "active",
+      "draftUpdatedAt": null,
+      "id": "9372e71e-c19f-4ec5-a82d-1a00be061dfc"
     }
   }
 ]

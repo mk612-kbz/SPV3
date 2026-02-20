@@ -1121,7 +1121,13 @@
       const createSelectedServiceCard = (service, existingService = {}) => {
         if (!selectedServicesContainer) return null;
         const card = document.createElement("div");
-        const isPayAdvance = Boolean(service.requiresAdditionalRegistration);
+        const requiresRegistration = Boolean(
+          service.requiresAdditionalRegistration,
+        );
+        const hasAdditionalFields = Array.isArray(
+          service.additionalRegistrationFields,
+        );
+        const showRegistrationButton = Boolean(service.showRegistrationButton);
         const payAdvanceShortCode =
           existingService?.payAdvanceRegistration?.shortCode ||
           generateShortCode(service.serviceCode, currentClient?.cif);
@@ -1131,6 +1137,10 @@
         card.dataset.serviceName = service.serviceName || "";
         card.dataset.serviceIntermediate = service.intermediateAccount || "";
         card.dataset.payAdvanceShortCode = payAdvanceShortCode;
+        card.dataset.requiresAdditionalRegistration = requiresRegistration
+          ? "true"
+          : "false";
+        card.dataset.registrationConfirmed = "false";
         card.innerHTML = `
           <div class="service-accordion-header" data-accordion-toggle>
             <h3>${service.serviceName || "Service"} (${service.serviceCode || ""})</h3>
@@ -1166,41 +1176,55 @@
             </div>
           </div>
           ${
-            isPayAdvance
+            hasAdditionalFields
               ? `
           <div class="service-extra" data-pay-advance-registration>
-            <div class="service-extra-title">Additional Registration</div>
-            <label>Pay Advance Registration</label>
-            <div style="margin-top: 8px">
-              <div class="section-note">Editable</div>
-              <div class="grid-2">
-                <div>
-                  <label>Organization Name</label>
-                  <input data-pay-advance-client-name />
-                </div>
-                <div>
-                  <label>Owner Phone</label>
-                  <input data-pay-advance-owner-phone />
-                </div>
-                <div>
-                  <label>KBZ Pay Merchant Code</label>
-                  <input data-pay-advance-merchant-code />
-                </div>
-              </div>
+            <div class="service-extra-title">Additional Details</div>
+            ${
+              requiresRegistration
+                ? '<div class="section-note">Additional registration required before save.</div>'
+                : ""
+            }
+            <div class="grid-2">
+              ${service.additionalRegistrationFields
+                .map((field) => {
+                  let autopopulateScript = "";
+                  if (field.autoPopulate) {
+                    autopopulateScript = `data-autopopulate="${field.autoPopulate}"`;
+                  }
+                  const isReadonly =
+                    field.readonly === true || field.readOnly === true;
+                  if (
+                    field.type === "dropdown" &&
+                    Array.isArray(field.options)
+                  ) {
+                    return `
+                      <div>
+                        <label>${field.label}${field.required ? '<span class="required">*</span>' : ""}</label>
+                        <select name="${field.field}" data-additional-field="${field.field}" ${field.required ? "required" : ""} ${autopopulateScript} ${isReadonly ? "disabled" : ""}>
+                          <option value="">Select...</option>
+                          ${field.options.map((option) => `<option value="${option}">${option}</option>`).join("")}
+                        </select>
+                      </div>
+                    `;
+                  }
+                  return `
+                    <div>
+                      <label>${field.label}${field.required ? '<span class="required">*</span>' : ""}</label>
+                      <input 
+                        name="${field.field}" 
+                        data-additional-field="${field.field}" 
+                        type="${field.type === "number" ? "number" : "text"}" 
+                        ${field.required ? "required" : ""} ${autopopulateScript} ${isReadonly ? "readonly" : ""}
+                      />
+                    </div>
+                  `;
+                })
+                .join("")}
             </div>
-            <div style="margin-top: 8px">
-              <div class="section-note">Read-only</div>
-              <div class="grid-2">
-                <div>
-                  <label>Owner Name</label>
-                  <div class="readonly-field" data-pay-advance-owner-name>-</div>
-                </div>
-                <div>
-                  <label>Owner Id</label>
-                  <div class="readonly-field" data-pay-advance-owner-id>-</div>
-                </div>
-              </div>
-            </div>
+            ${
+              service.requireDocumentUpload
+                ? `
             <div style="margin-top: 12px" data-documents-section>
               <label>Documents (Required)</label>
               <div class="document-list hidden" data-documents-wrap>
@@ -1212,6 +1236,27 @@
                 </button>
               </div>
             </div>
+            `
+                : ""
+            }
+            ${
+              requiresRegistration && showRegistrationButton
+                ? `
+            <div style="margin-top: 12px">
+              <button
+                class="btn btn-outline"
+                type="button"
+                data-register-service
+              >
+                Register Service
+              </button>
+              <span class="muted" data-registration-status>
+                Not registered yet.
+              </span>
+            </div>
+            `
+                : ""
+            }
           </div>
           `
               : ""
@@ -1371,6 +1416,19 @@
           addContactBtn.addEventListener("click", () => addContactRow());
         }
 
+        const registerBtn = card.querySelector("[data-register-service]");
+        const registrationStatus = card.querySelector(
+          "[data-registration-status]",
+        );
+        if (registerBtn) {
+          registerBtn.addEventListener("click", () => {
+            card.dataset.registrationConfirmed = "true";
+            if (registrationStatus) {
+              registrationStatus.textContent = "Registered.";
+            }
+          });
+        }
+
         if (Array.isArray(existingService.documents)) {
           existingService.documents.forEach((doc) => addDocumentRow(doc));
         }
@@ -1379,6 +1437,64 @@
             addContactRow(contact),
           );
         }
+
+        function autopopulateFields() {
+          if (service.additionalRegistrationFields) {
+            service.additionalRegistrationFields.forEach((field) => {
+              if (field.autoPopulate) {
+                const input = card.querySelector(
+                  `[data-additional-field="${field.field}"][data-autopopulate]`,
+                );
+                if (!input) return;
+
+                const getServiceValue = (key) => {
+                  if (!key || !service) return "";
+                  const normalizedKey = key.startsWith("service.")
+                    ? key.slice("service.".length)
+                    : key;
+                  const value = service[normalizedKey];
+                  return value === undefined || value === null
+                    ? ""
+                    : String(value);
+                };
+
+                const getFieldValue = (key) => {
+                  if (!key) return "";
+                  if (key.startsWith("service.")) {
+                    return getServiceValue(key);
+                  }
+                  const elById = document.getElementById(key);
+                  if (elById && typeof elById.value !== "undefined") {
+                    return elById.value;
+                  }
+                  const elByName = document.querySelector(`[name="${key}"]`);
+                  if (elByName && typeof elByName.value !== "undefined") {
+                    return elByName.value;
+                  }
+                  return getServiceValue(key);
+                };
+
+                let value = "";
+                if (
+                  typeof field.autoPopulate === "string" &&
+                  field.autoPopulate.includes("{")
+                ) {
+                  value = field.autoPopulate.replace(/\{([^}]+)\}/g, (_, key) =>
+                    getFieldValue(key.trim()),
+                  );
+                  value = value.replace(/\s+/g, " ").trim();
+                } else {
+                  value = getFieldValue(field.autoPopulate);
+                }
+
+                input.value = value;
+              }
+            });
+          }
+        }
+        setTimeout(autopopulateFields, 0);
+        form.addEventListener("input", autopopulateFields);
+        form.addEventListener("change", autopopulateFields);
 
         const payAdvanceClientNameInput = card.querySelector(
           "[data-pay-advance-client-name]",
@@ -1808,6 +1924,19 @@
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
+        const pendingRegistration = Array.from(
+          document.querySelectorAll("[data-selected-service]"),
+        ).some(
+          (card) =>
+            card.dataset.requiresAdditionalRegistration === "true" &&
+            card.dataset.registrationConfirmed !== "true",
+        );
+        if (pendingRegistration) {
+          alert(
+            "One or more selected services require additional registration before saving.",
+          );
+          return;
+        }
         try {
           await saveChanges();
           window.location.href = `client-detail.html?id=${clientId}`;

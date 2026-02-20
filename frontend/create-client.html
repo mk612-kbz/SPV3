@@ -1341,12 +1341,20 @@
       const createSelectedServiceCard = (service) => {
         if (!selectedServicesContainer) return null;
         const card = document.createElement("div");
-        const isPayAdvance = Boolean(service.requiresAdditionalRegistration);
+        const requiresRegistration = Boolean(service.requiresAdditionalRegistration);
+        const hasAdditionalFields = Array.isArray(
+          service.additionalRegistrationFields,
+        );
+        const showRegistrationButton = Boolean(service.showRegistrationButton);
         card.className = "card service-accordion";
         card.setAttribute("data-selected-service", "");
         card.dataset.serviceCode = service.serviceCode || "";
         card.dataset.serviceName = service.serviceName || "";
         card.dataset.serviceIntermediate = service.intermediateAccount || "";
+        card.dataset.requiresAdditionalRegistration = requiresRegistration
+          ? "true"
+          : "false";
+        card.dataset.registrationConfirmed = "false";
         card.innerHTML = `
           <div class="service-accordion-header" data-accordion-toggle>
             <h3>${service.serviceName || "Service"} (${
@@ -1384,10 +1392,15 @@
             </div>
           </div>
           ${
-            isPayAdvance && Array.isArray(service.additionalRegistrationFields)
+            hasAdditionalFields
               ? `
           <div class="service-extra" data-pay-advance-registration>
-            <div class="service-extra-title">Additional Registration</div>
+            <div class="service-extra-title">Additional Details</div>
+            ${
+              requiresRegistration
+                ? '<div class="section-note">Additional registration required before save.</div>'
+                : ''
+            }
             <div class="grid-2">
               ${service.additionalRegistrationFields
                 .map((field) => {
@@ -1438,10 +1451,28 @@
               </div>
             </div>
             ` : ''}
-          </div>
-          `
+            ${
+              requiresRegistration && showRegistrationButton
+                ? `
+            <div style="margin-top: 12px">
+              <button
+                class="btn btn-outline"
+                type="button"
+                data-register-service
+              >
+                Register Service
+              </button>
+              <span class="muted" data-registration-status>
+                Not registered yet.
+              </span>
+            </div>
+            `
+                : ''
+            }
+            </div>
+            `
               : ""
-          }
+            }
           <div style="margin-top: 14px">
             <label>Contact Persons</label>
             <div class="contact-list" data-service-contacts></div>
@@ -1577,6 +1608,20 @@
         if (addContactBtn) {
           addContactBtn.addEventListener("click", addContactRow);
         }
+
+        const registerBtn = card.querySelector("[data-register-service]");
+        const registrationStatus = card.querySelector(
+          "[data-registration-status]",
+        );
+        if (registerBtn) {
+          registerBtn.addEventListener("click", () => {
+            card.dataset.registrationConfirmed = "true";
+            if (registrationStatus) {
+              registrationStatus.textContent = "Registered.";
+            }
+          });
+        }
+
         selectedServicesContainer.appendChild(card);
 
         // Robust autopopulate logic
@@ -1983,6 +2028,26 @@
 
       form.addEventListener("submit", (event) => {
         event.preventDefault();
+        const pendingRegistration = Array.from(
+          document.querySelectorAll("[data-selected-service]"),
+        ).some(
+          (card) =>
+            card.dataset.requiresAdditionalRegistration === "true" &&
+            card.dataset.registrationConfirmed !== "true",
+        );
+
+        if (pendingRegistration) {
+          openModal({
+            title: "Additional registration required",
+            message:
+              "One or more selected services require additional registration before saving.",
+            actions: [
+              { label: "Okay", variant: "btn-primary" },
+            ],
+          });
+          return;
+        }
+
         openModal({
           title: "Create client",
           message: "Are you sure you want to save this client?",

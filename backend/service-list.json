@@ -21,6 +21,7 @@
     "intermediateAccount": "789852546",
     "productCode": "PAWL",
     "requiresAdditionalRegistration": true,
+    "showRegistrationButton": true,
     "merchantCode": "MRC-SC04",
     "additionalRegistrationFields": [
       {
