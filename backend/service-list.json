@@ -8,14 +8,6 @@
     "merchantCode": "MRC-SC01"
   },
   {
-    "serviceCode": "SC02",
-    "serviceName": "H2H_Payroll",
-    "intermediateAccount": "441152852",
-    "productCode": "PH2H",
-    "requiresAdditionalRegistration": false,
-    "merchantCode": null
-  },
-  {
     "serviceCode": "SC03",
     "serviceName": "H2H_Supplier",
     "intermediateAccount": "441589789",
@@ -29,6 +21,40 @@
     "intermediateAccount": "789852546",
     "productCode": "PAWL",
     "requiresAdditionalRegistration": true,
-    "merchantCode": "MRC-SC04"
+    "merchantCode": "MRC-SC04",
+    "additionalRegistrationFields": [
+      {
+        "field": "organizationName",
+        "label": "Organization Name",
+        "type": "string",
+        "required": true,
+        "autoPopulate": "clientName",
+        "readOnly": true
+      },
+      {
+        "field": "ownerPhone",
+        "label": "Owner Phone",
+        "type": "string",
+        "required": true,
+        "autoPopulate": "ownerPhone",
+        "readOnly": true
+      },
+      {
+        "field": "ownerNrc",
+        "label": "Owner NRC",
+        "type": "string",
+        "required": false,
+        "autoPopulate": "{ownerIdType} {ownerIdValue}",
+        "readOnly": true
+      },
+      {
+        "field": "merchantCode",
+        "label": "Merchant Code",
+        "type": "string",
+        "required": false,
+        "autoPopulate": "service.merchantCode"
+      }
+    ],
+    "requireDocumentUpload": true
   }
 ]
